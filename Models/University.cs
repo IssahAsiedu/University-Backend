@@ -1,5 +1,6 @@
 ﻿namespace UniversityRestApi.Models;
 
+
 public class Course
 {
     public int ID { get; set; }
@@ -9,6 +10,13 @@ public class Course
     public required int Credits { get; set; }
 
     public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+    public override int GetHashCode() => ID.GetHashCode();
+
+    public override bool Equals(object? obj)
+    {
+        return obj != null && (obj is Course course) && course.ID == ID;
+    }
 
 }
 
@@ -30,6 +38,13 @@ public class Enrollment
     public Course Course { get; set; }
 
     public Student Student { get; set; }
+
+    public override int GetHashCode() => ID.GetHashCode();
+
+    public override bool Equals(object? obj)
+    {
+        return obj != null && (obj is Enrollment enrollment) && enrollment.ID == ID;
+    }
 }
 
 public class Student
@@ -43,5 +58,12 @@ public class Student
     public DateTimeOffset EnrollmentDate { get; set; }
 
     public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+    public override int GetHashCode() => ID.GetHashCode();
+
+    public override bool Equals(object? obj)
+    {
+        return obj != null && (obj is Student student) && student.ID == ID;
+    }
 
 }
