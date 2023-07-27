@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5M7HIFho2fdBUMfDXhgn7/rFOJNZM7fhnf7BbwiWzr9oGpU3XDJ8GEXj08qlrpNDAUZUUEuVwrOQxyqvcW1agg==",
+  "dgSpecHash": "fHGN26Ijs/sBzKAOpoaw+m9IS8NZ2Pry6D4n052E1T4JLsUSi0cz5ogJiv1YZWWzND6aeX1C5LwdBM+PM9LweQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\IssahAsiedu\\Desktop\\project\\UniversityRestApi\\UniversityRestApi.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\IssahAsiedu\\.nuget\\packages\\microsoft.entityframeworkcore.design\\7.0.9\\microsoft.entityframeworkcore.design.7.0.9.nupkg.sha512",
     "C:\\Users\\IssahAsiedu\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.9\\microsoft.entityframeworkcore.relational.7.0.9.nupkg.sha512",
     "C:\\Users\\IssahAsiedu\\.nuget\\packages\\microsoft.entityframeworkcore.relational.design\\1.1.1\\microsoft.entityframeworkcore.relational.design.1.1.1.nupkg.sha512",
+    "C:\\Users\\IssahAsiedu\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\7.0.9\\microsoft.entityframeworkcore.tools.7.0.9.nupkg.sha512",
     "C:\\Users\\IssahAsiedu\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\IssahAsiedu\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\IssahAsiedu\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
