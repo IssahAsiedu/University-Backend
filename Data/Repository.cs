@@ -27,7 +27,7 @@ public interface IRepository<T, R>
 
 public class Repository<T, R> : IRepository<T, R> where T : class
 {
-    private UniversityContext database;
+    private readonly UniversityContext database;
 
     public Repository(UniversityContext database) {
         this.database = database;

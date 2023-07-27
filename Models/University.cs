@@ -1,9 +1,8 @@
 ﻿namespace UniversityRestApi.Models;
 
-
 public class Course
 {
-    public int ID { get; set; }
+    public Guid ID { get; set; }
 
     public required string Title { get; set; }
 
@@ -27,7 +26,7 @@ public enum Grade
 
 public class Enrollment
 {
-    public int ID { get; set; }
+    public Guid ID { get; set; }
 
     public int CourseID { get; set; }
 
@@ -35,9 +34,9 @@ public class Enrollment
 
     public Grade? Grade { get; set; }
 
-    public Course Course { get; set; }
+    public Course? Course { get; set; }
 
-    public Student Student { get; set; }
+    public Student? Student { get; set; }
 
     public override int GetHashCode() => ID.GetHashCode();
 
@@ -49,7 +48,7 @@ public class Enrollment
 
 public class Student
 {
-    public int ID { get; set; }
+    public Guid ID { get; set; }
 
     public required string FirstName { get; set; }
 
