@@ -1,4 +1,6 @@
-﻿namespace UniversityRestApi.Dto;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UniversityRestApi.Dto;
 
 public record CourseCreationData(string Title, int Credits);
 
@@ -14,14 +16,20 @@ public record CourseUpdateData(string? Title, int? Credits, int ID)
 
 
 public record StudentRegistrationData(
+    [Required, MinLength(1)]
     string FirstName,
+    [Required, MinLength(1)]
     string LastName,
+    [Required, RegularExpression(@"^\d{4}-\d{2}-\d{2}$")]
     string EnrollmentDate
 );
 
 public record StudentUpdateData(
+    [MinLength(1)]
     string? FirstName,
+    [MinLength(1)]
     string? LastName,
+    [RegularExpression(@"^\d{4}-\d{2}-\d{2}$")]
     string? EnrollmentDate
 )
 {
@@ -38,7 +46,6 @@ public record StudentRegistrationResponseData(
     string EnrollmentDate
 );
 
-
 public record StudentResponseData(
     string ID,
     string FirstName,
@@ -46,7 +53,6 @@ public record StudentResponseData(
     string EnrollmentDate,
     ICollection<EnrollmentResponseData> Enrollments
 );
-
 
 public record EnrollmentCreationData(
     string CourseID,
