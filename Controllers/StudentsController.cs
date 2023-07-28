@@ -29,4 +29,17 @@ public class StudentsController: ControllerBase
         StudentResponseData data = await service.GetStudentByID(id);
         return Ok(data);
     }
+
+    [HttpPut, Route("{id}")]
+    public async Task<IActionResult> UpdateStudent(Guid id,[FromBody] StudentUpdateData data)
+    {
+        await service.UpdateStudent(id, data);
+        return NoContent();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetStudents([FromQuery]PaginationFilter filter)
+    {
+        throw new NotImplementedException();
+    }
 }

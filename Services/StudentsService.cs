@@ -33,6 +33,14 @@ public class StudentsService
         var student = await repository.FilterForFirst(func);
 
         return mapper.Map<StudentResponseData>(student);
+    }
 
+    public async Task UpdateStudent(Guid id, StudentUpdateData data)
+    {
+        var student = await repository.FilterForFirst((q) => q.Where(x => x.ID == id));
+
+        mapper.Map(data, student);
+
+        await repository.Save();
     }
 }

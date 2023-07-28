@@ -19,6 +19,9 @@ public class MapperConfig: Profile
 
         CreateMap<Student, StudentResponseData>();
 
+        CreateMap<StudentUpdateData, Student>()
+          .ForAllMembers((opt) => opt.Condition((src, dest, value) => value != null));
+
         CreateMap<Enrollment, EnrollmentResponseData>();
 
         CreateMap<EnrollmentCreationData, Enrollment>();
@@ -34,9 +37,13 @@ public class StringToDateConverter : ITypeConverter<string, DateTimeOffset>
 {
     public DateTimeOffset Convert(string source, DateTimeOffset destination, ResolutionContext context)
     {
-        DateTimeOffset result;
 
-        DateTimeOffset.TryParseExact(source, "yyyy-MM-dd", null, DateTimeStyles.AssumeUniversal, out result);
+        bool parsed = DateTimeOffset.TryParseExact(source, "yyyy-MM-dd", null, DateTimeStyles.AssumeUniversal, out DateTimeOffset result);
+
+        if (!parsed)
+        {
+            return destination;
+        }
 
         return result;
     }

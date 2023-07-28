@@ -8,7 +8,7 @@ public record CourseUpdateData(string? Title, int? Credits, int ID)
 {
     public bool UpdateProvided()
     {
-        return Title != null && Credits != null;
+        return Title != null || Credits != null;
     }
 }
 
@@ -18,6 +18,18 @@ public record StudentRegistrationData(
     string LastName,
     string EnrollmentDate
 );
+
+public record StudentUpdateData(
+    string? FirstName,
+    string? LastName,
+    string? EnrollmentDate
+)
+{
+    public bool UpdateProvided()
+    {
+        return FirstName != null || LastName != null || EnrollmentDate != null;
+    }
+}
 
 public record StudentRegistrationResponseData(
     string ID,
