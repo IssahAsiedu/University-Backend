@@ -1,15 +1,53 @@
 ﻿namespace UniversityRestApi.Dto;
 
-public record CourseDto(string Title, int Credits);
+public record CourseCreationData(string Title, int Credits);
 
-public record CourseCreatedDto(String ID, string Title, string Credits);
+public record CourseResponseData(string ID, string Title, string Credits);
 
-public record CourseUpdateDto(string? Title, int? Credits, int ID)
+public record CourseUpdateData(string? Title, int? Credits, int ID)
 {
     public bool UpdateProvided()
     {
         return Title != null && Credits != null;
     }
 }
+
+
+public record StudentRegistrationData(
+    string FirstName,
+    string LastName,
+    string EnrollmentDate
+);
+
+public record StudentRegistrationResponseData(
+    string ID,
+    string FirstName,
+    string LastName,
+    string EnrollmentDate
+);
+
+
+public record StudentResponseData(
+    string ID,
+    string FirstName,
+    string LastName,
+    string EnrollmentDate,
+    ICollection<EnrollmentResponseData> Enrollments
+);
+
+
+public record EnrollmentCreationData(
+    string CourseID,
+    string StudentID,
+    string? Grade
+);
+
+
+public record EnrollmentResponseData(
+    string ID,
+    string? Grade,
+    CourseResponseData? Course
+);
+
 
 public record PaginationFilter(int CurrentIndex = 0, int PageSize = 10);

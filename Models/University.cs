@@ -9,14 +9,6 @@ public class Course
     public required int Credits { get; set; }
 
     public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
-
-    public override int GetHashCode() => ID.GetHashCode();
-
-    public override bool Equals(object? obj)
-    {
-        return obj != null && (obj is Course course) && course.ID == ID;
-    }
-
 }
 
 public enum Grade
@@ -28,22 +20,15 @@ public class Enrollment
 {
     public Guid ID { get; set; }
 
-    public int CourseID { get; set; }
+    public Guid CourseID { get; set; }
 
-    public int StudentID { get; set; }
+    public Guid StudentID { get; set; }
 
     public Grade? Grade { get; set; }
 
     public Course? Course { get; set; }
 
     public Student? Student { get; set; }
-
-    public override int GetHashCode() => ID.GetHashCode();
-
-    public override bool Equals(object? obj)
-    {
-        return obj != null && (obj is Enrollment enrollment) && enrollment.ID == ID;
-    }
 }
 
 public class Student
@@ -57,12 +42,5 @@ public class Student
     public DateTimeOffset EnrollmentDate { get; set; }
 
     public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
-
-    public override int GetHashCode() => ID.GetHashCode();
-
-    public override bool Equals(object? obj)
-    {
-        return obj != null && (obj is Student student) && student.ID == ID;
-    }
 
 }

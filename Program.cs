@@ -18,9 +18,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UniversityContext>((options) => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddAutoMapper(typeof(MapperConfig));
-builder.Services.AddScoped<Repository<Course, Guid>>();
-builder.Services.AddScoped<Repository<Student, Guid>>();
+builder.Services.AddScoped<Repository<Course>>();
+builder.Services.AddScoped<Repository<Student>>();
 builder.Services.AddScoped<CoursesService>();
+builder.Services.AddScoped<StudentsService>();
 
 var app = builder.Build();
 

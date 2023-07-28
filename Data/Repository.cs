@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 using UniversityRestApi.Dto;
 
 namespace UniversityRestApi.Data;
@@ -14,18 +13,18 @@ public class PaginatedData<T> {
 }
 
 
-public interface IRepository<T, R>
+public interface IRepository<T>
 {
     Task Create(T entity);
 
     Task Delete(T entity);
 
-    Task<PaginatedData<T>> GetAll(PaginationFilter dto, Expression<Func<T, bool>>? filter);
+    Task<PaginatedData<T>> GetAll(PaginationFilter dto, Func<IQueryable<T>, IQueryable<T>>? exp = null);
 
-    Task<T> GetByID(R id);
+    Task<T> FilterForFirst(Func<IQueryable<T>, IQueryable<T>> exp);
 }
 
-public class Repository<T, R> : IRepository<T, R> where T : class
+public class Repository<T> : IRepository<T> where T : class
 {
     private readonly UniversityContext database;
 
@@ -45,16 +44,14 @@ public class Repository<T, R> : IRepository<T, R> where T : class
         await database.SaveChangesAsync();
     }
 
-    public async Task<PaginatedData<T>> GetAll(PaginationFilter dto, Expression<Func<T, bool>>? filter = null)
+    public async Task<PaginatedData<T>> GetAll(PaginationFilter dto, Func<IQueryable<T>, IQueryable<T>>? exp = null)
     {
        var count = await database.Set<T>().CountAsync();
 
         var query = database.Set<T>().AsQueryable();
 
-        if(filter != null)
-        {
-            query = query.Where(filter);
-        }
+        query = exp?.Invoke(query) ?? query;
+        
 
         var data = await query
             .Skip(dto.CurrentIndex - 1 * dto.PageSize)
@@ -70,8 +67,13 @@ public class Repository<T, R> : IRepository<T, R> where T : class
         };
     }
 
-    public async Task<T> GetByID(R id)
+    public async Task<T> FilterForFirst(Func<IQueryable<T>, IQueryable<T>> exp)
     {
-        return await database.Set<T>().Where((e) => e.Equals(id)).FirstAsync();
+        var query = database.Set<T>().AsQueryable();
+
+        query = exp.Invoke(query);
+
+        return await query
+            .FirstAsync();
     }
 }
