@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using UniversityDto;
 using UniversityRestApi.Data;
-using UniversityRestApi.Dto;
-using UniversityRestApi.Models;
+using UniversityShared.Models;
 
 namespace UniversityRestApi.Services;
 

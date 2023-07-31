@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UniversityRestApi.Dto;
+using UniversityDto;
 using UniversityRestApi.Services;
 
 namespace UniversityRestApi.Controllers;
@@ -49,5 +49,12 @@ public class StudentsController: ControllerBase
     {
         await service.DeleteStudent(id);
         return Ok();
+    }
+
+
+    [HttpPost, Route("enroll")]
+    public async Task<IActionResult> Enroll(EnrollmentData data)
+    {
+        throw new NotImplementedException();
     }
 }

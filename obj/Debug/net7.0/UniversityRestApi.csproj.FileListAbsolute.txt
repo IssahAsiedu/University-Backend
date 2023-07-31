@@ -1,3 +1,10 @@
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.csproj.AssemblyReference.cache
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.AssemblyInfoInputs.cache
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.AssemblyInfo.cs
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.csproj.CoreCompileInputs.cache
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\appsettings.json
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\UniversityRestApi.exe
@@ -24,13 +31,8 @@ C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\Swashbuc
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\System.CodeDom.dll
-C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.csproj.AssemblyReference.cache
-C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.AssemblyInfoInputs.cache
-C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.AssemblyInfo.cs
-C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.csproj.CoreCompileInputs.cache
-C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\UniversityRestApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\UniversityShared.dll
+C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\bin\Debug\net7.0\UniversityShared.pdb
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\staticwebassets\msbuild.UniversityRestApi.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\staticwebassets\msbuild.build.UniversityRestApi.props
 C:\Users\IssahAsiedu\Desktop\project\UniversityRestApi\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.UniversityRestApi.props

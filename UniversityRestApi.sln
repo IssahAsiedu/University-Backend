@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityRestApi", "UniversityRestApi.csproj", "{68C9F0C3-4E5A-4F2C-8296-5BFAFBCA269B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityRestApi", "UniversityRestApi.csproj", "{68C9F0C3-4E5A-4F2C-8296-5BFAFBCA269B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityWeb", "..\UniversityWeb\UniversityWeb.csproj", "{9DDC4545-9728-475B-97BD-80312C84DFAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityShared", "..\UniversityDto\UniversityShared.csproj", "{65236345-7657-43EF-8C3C-F6A5ED4548AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{68C9F0C3-4E5A-4F2C-8296-5BFAFBCA269B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68C9F0C3-4E5A-4F2C-8296-5BFAFBCA269B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68C9F0C3-4E5A-4F2C-8296-5BFAFBCA269B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DDC4545-9728-475B-97BD-80312C84DFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DDC4545-9728-475B-97BD-80312C84DFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DDC4545-9728-475B-97BD-80312C84DFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DDC4545-9728-475B-97BD-80312C84DFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65236345-7657-43EF-8C3C-F6A5ED4548AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65236345-7657-43EF-8C3C-F6A5ED4548AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65236345-7657-43EF-8C3C-F6A5ED4548AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65236345-7657-43EF-8C3C-F6A5ED4548AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using UniversityDto;
 using UniversityRestApi.Data;
-using UniversityRestApi.Dto;
 using UniversityRestApi.Exceptions;
-using UniversityRestApi.Models;
+using UniversityShared.Models;
 
 namespace UniversityRestApi.Services;
 
@@ -69,9 +69,15 @@ public class StudentsService
     {
         var paginatedData = await repository.GetAll(filter, AddNecessaryFieldsInQuery);
 
-        List<Student> students = mapper.Map<List<Student>>(paginatedData.Items);
+        List<StudentResponseData> students = mapper.Map<List<Student>, List<StudentResponseData>>(paginatedData.Items);
 
-        return new { paginatedData.CurrentIndex, paginatedData.TotalItems, students };
+        var response = new StudentPaginationData(students)
+        {
+            CurrentIndex = paginatedData.CurrentIndex,
+            Count = paginatedData.TotalItems
+        };
+
+        return response;
     }
 
     private static IQueryable<Student> AddNecessaryFieldsInQuery(IQueryable<Student> query)

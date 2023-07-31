@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UniversityRestApi.Models;
+using UniversityShared.Models;
 
 namespace UniversityRestApi.Data;
 

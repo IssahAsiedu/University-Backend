@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using UniversityRestApi.Data;
 using UniversityRestApi.Exceptions;
-using UniversityRestApi.Mapping;
-using UniversityRestApi.Models;
 using UniversityRestApi.Services;
+using UniversityShared.Mapping;
+using UniversityShared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("UniversityContext");
@@ -22,6 +22,14 @@ builder.Services.AddScoped<Repository<Course>>();
 builder.Services.AddScoped<Repository<Student>>();
 builder.Services.AddScoped<CoursesService>();
 builder.Services.AddScoped<StudentsService>();
+builder.Services.AddCors(policy => {
+    policy.AddPolicy("CorsPolicy", opt =>
+    {
+        opt.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -35,6 +43,7 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
