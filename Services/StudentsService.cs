@@ -38,17 +38,27 @@ public class StudentsService
 
         if(student == null)
         {
-            var exeption =  new UniversityException(StatusCodes.Status400BadRequest);
-            exeption.Payload = new Dictionary<string, string>() { { "message", $"student with id {id} not present" } };
-            throw exeption;
+            throwErrorForNullStudent(id);
         }
 
         return mapper.Map<StudentResponseData>(student);
     }
 
+    private static void throwErrorForNullStudent(Guid id)
+    {
+        var exeption = new UniversityException(StatusCodes.Status400BadRequest);
+        exeption.Payload = new Dictionary<string, string>() { { "message", $"student with id {id} not present" } };
+        throw exeption;
+    }
+
     public async Task UpdateStudent(Guid id, StudentUpdateData data)
     {
         var student = await repository.FilterForFirst((q) => q.Where(x => x.ID == id));
+
+        if (student == null)
+        {
+            throwErrorForNullStudent(id);
+        }
 
         mapper.Map(data, student);
 
@@ -71,4 +81,18 @@ public class StudentsService
                 .OrderBy((s) => s.ID)
                 .AsNoTracking(); 
     }
+
+    public async Task DeleteStudent(Guid id)
+    {
+        var student = await repository.FilterForFirst((q) => q.Where(x => x.ID == id));
+
+        if (student == null)
+        {
+            throwErrorForNullStudent(id);
+        }
+
+        await repository.Delete(student!);
+    }
+
+
 }

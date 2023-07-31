@@ -40,8 +40,14 @@ public class StudentsController: ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetStudents([FromQuery]PaginationFilter filter)
     {
-        Console.WriteLine($"current index: {filter.CurrentIndex}, take: ${filter.PageSize}");
        var students = await service.GetStudents(filter);
        return Ok(students);
+    }
+
+    [HttpDelete, Route("{id}")]
+    public async Task<IActionResult> DeleteStudent(Guid id)
+    {
+        await service.DeleteStudent(id);
+        return Ok();
     }
 }
