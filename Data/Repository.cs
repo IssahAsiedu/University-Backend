@@ -21,7 +21,7 @@ public interface IRepository<T>
 
     Task<PaginatedData<T>> GetAll(PaginationFilter dto, Func<IQueryable<T>, IQueryable<T>>? exp = null);
 
-    Task<T> FilterForFirst(Func<IQueryable<T>, IQueryable<T>> exp);
+    Task<T?> FilterForFirst(Func<IQueryable<T>, IQueryable<T>> exp);
 }
 
 public class Repository<T> : IRepository<T> where T : class
@@ -44,7 +44,7 @@ public class Repository<T> : IRepository<T> where T : class
         await database.SaveChangesAsync();
     }
 
-    public async Task<PaginatedData<T>> GetAll(PaginationFilter dto, Func<IQueryable<T>, IQueryable<T>>? exp = null)
+    public async Task<PaginatedData<T>> GetAll(PaginationFilter filter, Func<IQueryable<T>, IQueryable<T>>? exp = null)
     {
        var count = await database.Set<T>().CountAsync();
 
@@ -54,27 +54,27 @@ public class Repository<T> : IRepository<T> where T : class
         
 
         var data = await query
-            .Skip(dto.CurrentIndex - 1 * dto.PageSize)
-            .Take(dto.PageSize)
+            .Skip(filter.CurrentIndex - 1)
+            .Take(filter.PageSize)
             .ToListAsync();
 
 
         return new PaginatedData<T>()
         {
-            CurrentIndex = dto.CurrentIndex,
+            CurrentIndex = filter.CurrentIndex,
             Items = data,
             TotalItems = count
         };
     }
 
-    public async Task<T> FilterForFirst(Func<IQueryable<T>, IQueryable<T>> exp)
+    public async Task<T?> FilterForFirst(Func<IQueryable<T>, IQueryable<T>> exp)
     {
         var query = database.Set<T>().AsQueryable();
 
         query = exp.Invoke(query);
 
         return await query
-            .FirstAsync();
+            .FirstOrDefaultAsync();
     }
 
     public async Task Save()

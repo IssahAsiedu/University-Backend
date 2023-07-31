@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using UniversityRestApi.Data;
 using UniversityRestApi.Dto;
+using UniversityRestApi.Exceptions;
 using UniversityRestApi.Models;
 
 namespace UniversityRestApi.Services;
@@ -32,6 +33,13 @@ public class StudentsService
         
         var student = await repository.FilterForFirst(func);
 
+        if(student == null)
+        {
+            var exeption =  new UniversityException(StatusCodes.Status400BadRequest);
+            exeption.Payload = new Dictionary<string, string>() { { "message", $"student with id {id} not present" } };
+            throw exeption;
+        }
+
         return mapper.Map<StudentResponseData>(student);
     }
 
@@ -42,5 +50,14 @@ public class StudentsService
         mapper.Map(data, student);
 
         await repository.Save();
+    }
+
+    public async Task<object> GetStudents(PaginationFilter filter)
+    {
+        var paginatedData = await repository.GetAll(filter, (query) => query.OrderBy((s) => s.ID));
+
+        List<Student> students = mapper.Map<List<Student>>(paginatedData.Items);
+
+        return new {paginatedData.CurrentIndex, paginatedData.TotalItems, students};
     }
 }

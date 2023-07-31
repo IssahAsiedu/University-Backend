@@ -40,6 +40,8 @@ public class StudentsController: ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetStudents([FromQuery]PaginationFilter filter)
     {
-        throw new NotImplementedException();
+        Console.WriteLine($"current index: {filter.CurrentIndex}, take: ${filter.PageSize}");
+       var students = await service.GetStudents(filter);
+       return Ok(students);
     }
 }

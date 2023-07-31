@@ -1,6 +1,6 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UniversityRestApi.Data;
+using UniversityRestApi.Exceptions;
 using UniversityRestApi.Mapping;
 using UniversityRestApi.Models;
 using UniversityRestApi.Services;
@@ -10,7 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("UniversityCont
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<UniversityResponseExceptionFilter>());
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,6 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 

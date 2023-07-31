@@ -67,5 +67,13 @@ public record EnrollmentResponseData(
     CourseResponseData? Course
 );
 
+public record PaginationFilter
+{
+    private int? index;
 
-public record PaginationFilter(int CurrentIndex = 0, int PageSize = 10);
+    private int? pageSize;
+   
+    public int CurrentIndex { get => index ?? 1; set => index = value; }
+
+    public int PageSize { get => pageSize ?? 10; set => pageSize = value; }
+}
