@@ -6,6 +6,7 @@ using UniversityRestApi.Exceptions;
 using UniversityRestApi.Models;
 
 namespace UniversityRestApi.Services;
+
 public class StudentsService
 {
     private readonly Repository<Student> repository;
@@ -20,17 +21,19 @@ public class StudentsService
     public async Task<StudentRegistrationResponseData> RegisterStudent(StudentRegistrationData registrationData)
     {
         var student = mapper.Map<Student>(registrationData);
-        student.ID = Guid.NewGuid();
+        Guid.NewGuid();
         await repository.Create(student);
         return mapper.Map<StudentRegistrationResponseData>(student);
     }
 
     public async Task<StudentResponseData> GetStudentByID(Guid id)
     {
-        Func<IQueryable<Student>, IQueryable<Student>> func = query => query.Where(x => x.ID == id);
 
-        func += (query) => query.Include((e) => e.Enrollments).ThenInclude((e) => e.Course).AsNoTracking();
-        
+        IQueryable<Student> func(IQueryable<Student> query)
+        {
+            return AddNecessaryFieldsInQuery(query.Where(x => x.ID == id));
+        }
+
         var student = await repository.FilterForFirst(func);
 
         if(student == null)
@@ -54,10 +57,18 @@ public class StudentsService
 
     public async Task<object> GetStudents(PaginationFilter filter)
     {
-        var paginatedData = await repository.GetAll(filter, (query) => query.OrderBy((s) => s.ID));
+        var paginatedData = await repository.GetAll(filter, AddNecessaryFieldsInQuery);
 
         List<Student> students = mapper.Map<List<Student>>(paginatedData.Items);
 
-        return new {paginatedData.CurrentIndex, paginatedData.TotalItems, students};
+        return new { paginatedData.CurrentIndex, paginatedData.TotalItems, students };
+    }
+
+    private static IQueryable<Student> AddNecessaryFieldsInQuery(IQueryable<Student> query)
+    {
+        return query.Include((e) => e.Enrollments)
+                .ThenInclude((e) => e.Course)
+                .OrderBy((s) => s.ID)
+                .AsNoTracking(); 
     }
 }
