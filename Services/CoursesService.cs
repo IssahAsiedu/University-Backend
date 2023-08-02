@@ -31,4 +31,14 @@ public class CoursesService
 
         return mapper.Map<CourseResponseData>(course);
     }
+
+    public async Task<CoursePaginationData> GetCourses(PaginationFilter filter)
+    {
+        var paginatedData = await coursesRepo.GetAll(filter);
+        var courses = mapper.Map<List<CourseResponseData>>(paginatedData.Items);
+        var response = new CoursePaginationData(courses);
+        response.CurrentIndex = paginatedData.CurrentIndex;
+        response.Count = paginatedData.TotalItems;
+        return response;
+    }
 }

@@ -38,13 +38,13 @@ public class StudentsService
 
         if(student == null)
         {
-            throwErrorForNullStudent(id);
+            ThrowErrorForNullStudent(id);
         }
 
         return mapper.Map<StudentResponseData>(student);
     }
 
-    private static void throwErrorForNullStudent(Guid id)
+    private static void ThrowErrorForNullStudent(Guid id)
     {
         var exeption = new UniversityException(StatusCodes.Status400BadRequest);
         exeption.Payload = new Dictionary<string, string>() { { "message", $"student with id {id} not present" } };
@@ -53,14 +53,29 @@ public class StudentsService
 
     public async Task UpdateStudent(Guid id, StudentUpdateData data)
     {
-        var student = await repository.FilterForFirst((q) => q.Where(x => x.ID == id));
+        var student = await repository.FilterForFirst((q) => AddNecessaryFieldsInQuery(q.Where(x => x.ID == id)));
 
         if (student == null)
         {
-            throwErrorForNullStudent(id);
+            ThrowErrorForNullStudent(id);
         }
 
         mapper.Map(data, student);
+
+        student!.Enrollments.RemoveAll(el => !data.Courses.Contains(el.CourseID.ToString()));
+        var unErolledCourses = data.Courses
+            .Where(s => !student.Enrollments.Any(el => el.CourseID.ToString() == s))
+            .ToList();
+
+        unErolledCourses.ForEach((c) =>
+        {
+            var en = new Enrollment()
+            {
+                StudentID = student.ID,
+                CourseID = Guid.Parse(c)
+            };
+            student.Enrollments.Add(en);
+        });
 
         await repository.Save();
     }
@@ -84,8 +99,7 @@ public class StudentsService
     {
         return query.Include((e) => e.Enrollments)
                 .ThenInclude((e) => e.Course)
-                .OrderBy((s) => s.ID)
-                .AsNoTracking(); 
+                .OrderBy((s) => s.ID); 
     }
 
     public async Task DeleteStudent(Guid id)
@@ -94,7 +108,7 @@ public class StudentsService
 
         if (student == null)
         {
-            throwErrorForNullStudent(id);
+            ThrowErrorForNullStudent(id);
         }
 
         await repository.Delete(student!);

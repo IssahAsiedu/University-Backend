@@ -10,7 +10,6 @@ public class CoursesController: ControllerBase
 {
     private readonly CoursesService service;
 
-
     public CoursesController(CoursesService service)
     {
         this.service = service;
@@ -21,6 +20,13 @@ public class CoursesController: ControllerBase
     {
         var course = await service.CreateCourse(courseDto);
         return CreatedAtAction(nameof(GetCourseById),new { course.ID }, course);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetCourses([FromQuery] PaginationFilter filter)
+    {
+        CoursePaginationData response = await service.GetCourses(filter);
+        return Ok(response);
     }
 
     [HttpGet, Route("{id}")]
