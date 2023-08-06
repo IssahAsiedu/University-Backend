@@ -35,4 +35,18 @@ public class CoursesController: ControllerBase
        var course = await service.GetCourseById(id);
         return Ok(course);
     }
+
+    [HttpPut, Route("{id}")]
+    public async Task<IActionResult> UpdateCourse(Guid id, CourseUpdateDto dto)
+    {
+        await service.UpdateCourse(id, dto);
+        return Ok();
+    }
+
+    [HttpDelete,  Route("{id}")]
+    public async Task<IActionResult> DeleteCourse(Guid id)
+    {
+        await service.Delete(id);
+        return Ok();
+    }
 }

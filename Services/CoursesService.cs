@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using UniversityDto;
 using UniversityRestApi.Data;
+using UniversityRestApi.Exceptions;
 using UniversityShared.Models;
 
 namespace UniversityRestApi.Services;
@@ -41,5 +42,35 @@ public class CoursesService
         response.CurrentIndex = paginatedData.CurrentIndex;
         response.Count = paginatedData.TotalItems;
         return response;
+    }
+
+    public async Task Delete(Guid id)
+    {
+        var course = await coursesRepo.FilterForFirst((q) => q.Where(x => x.ID == id));
+
+        if(course == null)
+        {
+            ThrowNotFoundException(id);
+        }
+    }
+
+    private static void ThrowNotFoundException(Guid id)
+    {
+        Dictionary<string, object> payload = new() {
+                {"message", $"student with id <{id}> does not exist"}
+            };
+
+        throw new UniversityException(StatusCodes.Status400BadRequest, payload);
+    }
+
+    public async Task UpdateCourse(Guid id, CourseUpdateDto dto)
+    {
+        var course = await coursesRepo.FilterForFirst((q) => q.Where(x => x.ID == id));
+        if (course == null)
+        {
+            ThrowNotFoundException(id);
+        }
+        mapper.Map(dto, course);
+        await coursesRepo.Save();
     }
 }

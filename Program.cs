@@ -20,8 +20,10 @@ builder.Services.AddDbContext<UniversityContext>((options) => options.UseSqlServ
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddScoped<Repository<Course>>();
 builder.Services.AddScoped<Repository<Student>>();
+builder.Services.AddScoped<Repository<Department>>();
 builder.Services.AddScoped<CoursesService>();
 builder.Services.AddScoped<StudentsService>();
+builder.Services.AddScoped<DepartmentsService>();
 builder.Services.AddCors(policy => {
     policy.AddPolicy("CorsPolicy", opt =>
     {
