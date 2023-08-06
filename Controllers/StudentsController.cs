@@ -52,9 +52,10 @@ public class StudentsController: ControllerBase
     }
 
 
-    [HttpPost, Route("enroll")]
-    public async Task<IActionResult> Enroll(EnrollmentData data)
+    [HttpPost, Route("Grade")]
+    public async Task<IActionResult> GradeStudent(StudentGradingData data)
     {
-        throw new NotImplementedException();
+        await service.GradeStudent(data);
+        return Ok();
     }
 }

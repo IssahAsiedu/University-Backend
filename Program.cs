@@ -16,7 +16,7 @@ builder.Services.AddControllers(options => options.Filters.Add<UniversityRespons
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<UniversityContext>((options) => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<UniversityContext>((options) => options.UseSqlServer(connectionString));
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddScoped<Repository<Course>>();
 builder.Services.AddScoped<Repository<Student>>();
@@ -32,6 +32,13 @@ builder.Services.AddCors(policy => {
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<UniversityContext>();
+    DataSeeder.SeedData(context);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

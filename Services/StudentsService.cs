@@ -114,5 +114,37 @@ public class StudentsService
         await repository.Delete(student!);
     }
 
+    public async Task GradeStudent(StudentGradingData data)
+    {
+        var student = await repository.FilterForFirst((q) => AddNecessaryFieldsInQuery(q).Where(x => x.ID == data.StudentID));
+        if (student == null)
+        {
+            ThrowErrorForNullStudent(data.StudentID);
+        }
 
+        var enrollment = student!.Enrollments.FirstOrDefault((en) => en.CourseID == data.CourseID);
+
+        
+        if(enrollment == null)
+        {
+            var exception = new UniversityException(StatusCodes.Status400BadRequest);
+            var payload = new Dictionary<string, object>() { {"message", "Student is not enrolled in that course." } };
+            exception.Payload = payload;
+            throw exception;
+        }
+
+        var graded = Enum.TryParse<Grade>(data.Grade, out Grade gradeEnum);
+
+        if(!graded)
+        {
+            var exception = new UniversityException(StatusCodes.Status400BadRequest);
+            var payload = new Dictionary<string, object>() { { "message", "The grades available are A, B, C, D, F." } };
+            exception.Payload = payload;
+            throw exception;
+        }
+
+        enrollment.Grade = gradeEnum;
+
+        await repository.Save();
+    }
 }

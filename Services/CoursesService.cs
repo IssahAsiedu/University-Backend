@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using UniversityDto;
 using UniversityRestApi.Data;
 using UniversityShared.Models;
@@ -27,14 +28,14 @@ public class CoursesService
 
     public async Task<CourseResponseData> GetCourseById(Guid id)
     {
-        var course = await coursesRepo.FilterForFirst((query) => query.Where(c => c.ID == id));
+        var course = await coursesRepo.FilterForFirst((query) => query.Include(c => c.Department).Where(c => c.ID == id));
 
         return mapper.Map<CourseResponseData>(course);
     }
 
     public async Task<CoursePaginationData> GetCourses(PaginationFilter filter)
     {
-        var paginatedData = await coursesRepo.GetAll(filter);
+        var paginatedData = await coursesRepo.GetAll(filter, (query) => query.Include(c => c.Department));
         var courses = mapper.Map<List<CourseResponseData>>(paginatedData.Items);
         var response = new CoursePaginationData(courses);
         response.CurrentIndex = paginatedData.CurrentIndex;
