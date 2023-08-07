@@ -52,6 +52,8 @@ public class CoursesService
         {
             ThrowNotFoundException(id);
         }
+
+        await coursesRepo.Delete(course!);
     }
 
     private static void ThrowNotFoundException(Guid id)

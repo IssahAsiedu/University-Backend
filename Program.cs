@@ -20,9 +20,11 @@ builder.Services.AddDbContext<UniversityContext>((options) => options.UseSqlServ
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddScoped<Repository<Course>>();
 builder.Services.AddScoped<Repository<Student>>();
+builder.Services.AddScoped<Repository<Instructor>>();
 builder.Services.AddScoped<Repository<Department>>();
 builder.Services.AddScoped<CoursesService>();
 builder.Services.AddScoped<StudentsService>();
+builder.Services.AddScoped<InstructorsService>();
 builder.Services.AddScoped<DepartmentsService>();
 builder.Services.AddCors(policy => {
     policy.AddPolicy("CorsPolicy", opt =>
@@ -43,11 +45,11 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseExceptionHandler("/error");
 

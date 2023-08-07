@@ -40,7 +40,7 @@ public class CoursesController: ControllerBase
     public async Task<IActionResult> UpdateCourse(Guid id, CourseUpdateDto dto)
     {
         await service.UpdateCourse(id, dto);
-        return Ok();
+        return NoContent();
     }
 
     [HttpDelete,  Route("{id}")]
