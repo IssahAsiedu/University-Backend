@@ -21,7 +21,12 @@ public class InstructorsService
     {
         static IQueryable<Instructor> query(IQueryable<Instructor> query)
         {
-            return query.Include(i => i.Courses).ThenInclude(c => c.Enrollments).ThenInclude(e => e.Student)
+            return query
+                .Include(i => i.Courses)
+                .ThenInclude(c => c.Department)
+                .Include(i => i.Courses)
+                .ThenInclude(c => c.Enrollments)
+                .ThenInclude(e => e.Student)
             .Include(i => i.OfficeAssignment);
         }
 
