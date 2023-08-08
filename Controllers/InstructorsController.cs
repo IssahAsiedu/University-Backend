@@ -17,7 +17,15 @@ public class InstructorsController: ControllerBase
     [HttpGet, Route("{id}")]
     public async Task<IActionResult> GetInstructor(Guid id)
     {
-        throw new NotImplementedException();
+        InstructorDto dto = await service.GetInstructor(id);
+        return Ok(dto);
+    }
+
+    [HttpPut, Route("{id}")]
+    public async Task<IActionResult> UpdateInstructor(Guid id, InstructorUpdateData data)
+    {
+        await service.UpdateInstructor(id, data);
+        return NoContent();
     }
 
     [HttpPost]
