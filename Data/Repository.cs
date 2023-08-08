@@ -49,7 +49,6 @@ public class Repository<T> : IRepository<T> where T : class
     public async Task<PaginatedData<T>> GetAll(PaginationFilter filter,
         Func<IQueryable<T>, IQueryable<T>>? exp = null)
     {
-        var count = await database.Set<T>().CountAsync();
         var query = database.Set<T>().AsQueryable();
         query = exp?.Invoke(query) ?? query;
 
@@ -57,6 +56,8 @@ public class Repository<T> : IRepository<T> where T : class
             .Skip((filter.CurrentIndex - 1) * filter.PageSize)
             .Take(filter.PageSize)
             .ToListAsync();
+
+        var count = await query.CountAsync();
 
         return new PaginatedData<T>()
         {
