@@ -14,6 +14,20 @@ public class InstructorsController: ControllerBase
         this.service = service;
     }
 
+    [HttpGet, Route("{id}")]
+    public async Task<IActionResult> GetInstructor(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RegisterInstructor(InstructorRegistrationData data)
+    {
+        InstructorDto instructor  = await service.Register(data);
+        return CreatedAtAction(nameof(GetInstructor), new {instructor.ID}, instructor);
+    }
+
+
     [HttpGet]
     public async Task<IActionResult> GetInstructors([FromQuery] PaginationFilter filter)
     {
