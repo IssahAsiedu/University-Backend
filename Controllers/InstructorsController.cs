@@ -21,6 +21,13 @@ public class InstructorsController: ControllerBase
         return Ok(dto);
     }
 
+    [HttpDelete, Route("{id}")]
+    public async Task<IActionResult> DeleteInstructor(Guid id)
+    {
+        await service.DeleteInstructor(id);
+        return NoContent();
+    }
+
     [HttpPut, Route("{id}")]
     public async Task<IActionResult> UpdateInstructor(Guid id, InstructorUpdateData data)
     {

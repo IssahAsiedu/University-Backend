@@ -13,7 +13,7 @@ public class InstructorsService
     private readonly Repository<Course> coursesRepo;
     private readonly IMapper mapper;
 
-    public InstructorsService(Repository<Instructor> instructorsRepo, Repository<Course> coursesRepo,IMapper mapper)
+    public InstructorsService(Repository<Instructor> instructorsRepo, Repository<Course> coursesRepo, IMapper mapper)
     {
         this.instructorsRepo = instructorsRepo;
         this.coursesRepo = coursesRepo;
@@ -40,8 +40,8 @@ public class InstructorsService
         var instructor = mapper.Map<Instructor>(data);
         instructor.ID = Guid.NewGuid();
 
-        
-        foreach(var id in data.Courses)
+
+        foreach (var id in data.Courses)
         {
             var course = await coursesRepo.FilterForFirst((q) => q.Where((c) => c.ID.Equals(Guid.Parse(id))));
             if (course == null)
@@ -52,9 +52,9 @@ public class InstructorsService
             instructor.Courses.Add(course!);
         }
 
-        if(data.Office != null)
+        if (data.Office != null)
         {
-            OfficeAssignment assignment = new ()
+            OfficeAssignment assignment = new()
             {
                 InstructorID = instructor.ID,
                 Location = data.Office
@@ -69,7 +69,7 @@ public class InstructorsService
 
     public async Task UpdateInstructor(Guid id, InstructorUpdateData data)
     {
-       var instructor = await instructorsRepo.FilterForFirst((q) => IncludeProperties(q).Where(i => i.ID.Equals(id)));
+        var instructor = await instructorsRepo.FilterForFirst((q) => IncludeProperties(q).Where(i => i.ID.Equals(id)));
 
         if (instructor == null)
         {
@@ -80,11 +80,11 @@ public class InstructorsService
 
         instructor.Courses.RemoveAll((c) => !data.Courses.Contains(c.ID.ToString()));
 
-        foreach(var cid in data.Courses)
+        foreach (var cid in data.Courses)
         {
-           var teaching = instructor.Courses.Any(c =>  c.ID.Equals(Guid.Parse(cid)));
+            var teaching = instructor.Courses.Any(c => c.ID.Equals(Guid.Parse(cid)));
 
-           if(teaching)
+            if (teaching)
             {
                 continue;
             }
@@ -98,9 +98,9 @@ public class InstructorsService
             instructor.Courses.Add(course!);
         }
 
-        if(data.Office != null)
+        if (data.Office != null)
         {
-            if(instructor.OfficeAssignment == null)
+            if (instructor.OfficeAssignment == null)
             {
                 OfficeAssignment assignment = new()
                 {
@@ -108,7 +108,8 @@ public class InstructorsService
                     Location = data.Office
                 };
                 instructor.OfficeAssignment = assignment;
-            } else
+            }
+            else
             {
                 instructor.OfficeAssignment.Location = data.Office;
             }
@@ -133,5 +134,13 @@ public class InstructorsService
             .ThenInclude(c => c.Enrollments)
             .ThenInclude(e => e.Student)
         .Include(i => i.OfficeAssignment);
+    }
+
+    public async Task DeleteInstructor(Guid id)
+    {
+        var instructor = await instructorsRepo.FilterForFirst((q) => q.Where(i => i.ID.Equals(id))) ??
+            throw new UniversityException(StatusCodes.Status400BadRequest);
+
+        await instructorsRepo.Delete(instructor);
     }
 }
