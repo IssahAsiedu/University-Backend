@@ -23,7 +23,14 @@ public class InstructorsService
     public async Task<InstructorPaginationData> GetInstructors(PaginationFilter filter)
     {
 
-        var paginatedData = await instructorsRepo.GetAll(filter, IncludeProperties);
+        var paginatedData = await instructorsRepo.GetAll(filter, (q) => { 
+            var query = IncludeProperties(q);
+            if(!string.IsNullOrEmpty(filter.SearchString))
+            {
+                query = query.Where((i) => i.FirstName.Contains(filter.SearchString) || i.LastName.Contains(filter.SearchString));
+            }
+            return query;
+        });
 
         var items = mapper.Map<List<InstructorDto>>(paginatedData.Items);
 
