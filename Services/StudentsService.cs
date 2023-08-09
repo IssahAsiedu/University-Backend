@@ -82,7 +82,17 @@ public class StudentsService
 
     public async Task<object> GetStudents(PaginationFilter filter)
     {
-        var paginatedData = await repository.GetAll(filter, AddNecessaryFieldsInQuery);
+        var paginatedData = await repository.GetAll(filter, (query) =>
+        {
+            query = AddNecessaryFieldsInQuery(query);
+
+            if(filter?.SearchString != null)
+            {
+                query = query.Where(s => s.FirstName.Contains(filter.SearchString) || s.LastName.Contains(filter.SearchString));
+            }
+
+            return query;
+        });
 
         List<StudentResponseData> students = mapper.Map<List<Student>, List<StudentResponseData>>(paginatedData.Items);
 

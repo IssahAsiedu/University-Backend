@@ -36,7 +36,17 @@ public class CoursesService
 
     public async Task<CoursePaginationData> GetCourses(PaginationFilter filter)
     {
-        var paginatedData = await coursesRepo.GetAll(filter, (query) => query.Include(c => c.Department));
+        var paginatedData = await coursesRepo.GetAll(filter, (query) =>
+        {
+            query = query.Include(c => c.Department);
+
+            if(filter?.SearchString != null)
+            {
+                query = query.Where((c) => c.Title.Contains(filter.SearchString));
+            }
+
+            return query;
+        });
         var courses = mapper.Map<List<CourseResponseData>>(paginatedData.Items);
         var response = new CoursePaginationData(courses);
         response.CurrentIndex = paginatedData.CurrentIndex;
